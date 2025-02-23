@@ -357,6 +357,14 @@ cursor: pointer
 }
 .rental-btn{
     background: var(--text-color);
+    color: var(--bg-color);
     padding: 7px 10px;
     font-size: 0.97rem;
+    border-radius: 4px;
+    transition: 0.4 ease;
 }
+.rental-btn:hover{
+    background: var(--main-color);
+    transition: 0.4s ease;
+}
+.reviews
