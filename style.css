@@ -469,3 +469,79 @@ cursor: pointer
     color: var(--bg-color);
     text-align: center;
 }
+/*Responsivness*/
+@media (max-width: 1080px){
+    .container{
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+@media (max-width: 970px){
+    .section{
+       padding: 2rem 0;
+    }
+    .home-img::before{
+        font-size: 11rem;
+        top: -80px;
+    }
+}
+@media (max-width: 880px){
+    .nav{
+        padding: 12px 20px;
+        border-radius: 0.6rem;
+    }
+    .logo{
+        font-size: 1.5rem;
+    }
+    .home {
+    min-height: 500px;
+    padding-top: 9rem !important;
+    }
+    .home-img::before{
+        font-size: 6rem;
+        top: -38px;
+    }
+    .footer-content{
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+}
+
+@media (max-width: 620px) {
+    .header {
+        top: 15px;
+    }
+    .nav-icons .bx {
+        font-size: 17px;
+    }
+    .menu-icon {
+        display: flex;
+    }
+
+    .navbar {
+        position: absolute;
+        top: 110%;
+        left: 50%;
+        transform: translate(-50%);
+        width: 90vw;
+        background: var(--text-color);
+        display: none; /* Hide by default */
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        border-radius: 1rem;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        transition: 0.5s all cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    /* When open-menu is added, display the navbar */
+    .navbar.open-menu {
+        display: flex;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    .nav-link {
+        display: block;
+        margin: 1rem 0;
+    }
+}
