@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental - Product Detail</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700&family=Squada+One&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./pdp.css">
+</head>
+<body>
+    <div class="container">
+        <div class="car-detail">
+            <div class="car-image">
+                <img id="mainImage" src="images/trend-1.png" alt="Car Image" onclick="openImageModal()">
+                <div class="thumbnails">
+                    <img src="images/trend-1.png" onclick="changeImage('images/trend-1.png')">
+                    <img src="images/trend-2.png" onclick="changeImage('images/trend-2.png')">
+                    <img src="images/trend-3.png" onclick="changeImage('images/trend-3.png')">
+                </div>
+            </div>
+            <div class="car-info">
+                <h1>Luxury SUV</h1>
+                <p class="price">$100/day</p>
+                <p class="description">Experience the best ride with our luxury SUV, equipped with modern features and a smooth drive.</p>
+                <button class="rent-btn" onclick="openContactModal()">Rent Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="flex">
+        <span class="close-modal" onclick="closeModal('imageModal')">&times;</span>
+        <img id="popupImage" src="">
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="flex">
+        <div class="contact-info">
+            <span class="close-modal" onclick="closeModal('contactModal')">&times;</span>
+            <h2>Contact Us</h2>
+            <a href="https://wa.me/1234567890" target="_blank" class="contact-btn">
+                <img src="images/whatsapp-logo.png" alt="WhatsApp">
+            </a>
+            <a href="https://t.me/username" target="_blank" class="contact-btn">
+                <img src="images/telegram-logo.png" alt="Telegram">
+            </a>
+        </div>
+    </div>
+
+    <script src="./pdp.js"></script>
+</body>
+</html>

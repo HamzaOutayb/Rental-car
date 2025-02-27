@@ -32,7 +32,7 @@ const animate = ScrollReveal({
 });
 
 // Apply ScrollReveal to your navbar
-animate.reveal('.nav, .heading');
-animate.reveal(".home-img img",{origin:'right'});
-animate.reveal('.input-form'),{origin: 'buttom'};
-animate.reveal('.trend-box, .rental-box'),{interval: 100};
+//animate.reveal('.nav, .heading');
+//animate.reveal(".home-img img",{origin:'right'});
+//animate.reveal('.input-form'),{origin: 'buttom'};
+//animate.reveal('.trend-box, .rental-box'),{interval: 100};

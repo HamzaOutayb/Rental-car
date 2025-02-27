@@ -1,0 +1,137 @@
+:root {
+    --main-color: #fa7104;
+    --second-color: #e05404;
+    --text-color: #060414;
+}
+
+body, html {
+    font-family: 'Poppins', sans-serif;
+    background: #f7f7f7;
+    color: var(--text-color);
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+}
+
+.car-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: #efe8e0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.car-image img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.thumbnails {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.thumbnails img {
+    width: 80px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.thumbnails img:hover {
+    transform: scale(1.1);
+}
+
+.car-info h1 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.price {
+    font-size: 1.5rem;
+    color: var(--main-color);
+}
+
+.description {
+    margin: 10px 0;
+}
+
+.rent-btn {
+    background: var(--main-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.rent-btn:hover {
+    background: var(--second-color);
+}
+
+#imageModal, #contactModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#imageModal img, #contactModal .contact-info {
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    background: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+}
+
+.contact-info .contact-btn {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: white;
+    transition: 0.3s;
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+.contact-info .contact-btn img {
+    width: 40px;
+    height: 40px;
+}
+
+.contact-info .contact-btn:hover {
+    background-color: #f0f0f0;
+}
