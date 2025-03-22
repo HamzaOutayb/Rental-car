@@ -6,12 +6,10 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"mime/multipart"
 	"net/http"
 	"os"
 	"path/filepath"
-	"reflect"
 	"slices"
 	"strings"
 
@@ -41,50 +39,6 @@ func ParseBody(r *http.Request, v interface{}) error {
 	return json.NewDecoder(r.Body).Decode(v)
 }
 
-// GetScanFields returns a slice of pointers to struct fields for scanning SQL results.
-// Pass a pointer to the struct.
-// Example: GetScanFields(&user) => []*interface{}{&user.ID, &user.FirstName, &user.LastName, &user.Nickname, &user.Image}
-func GetScanFields(s interface{}) []interface{} {
-	val := reflect.ValueOf(s)
-	if val.Kind() != reflect.Ptr || val.Elem().Kind() != reflect.Struct {
-		log.Fatal("Input must be a pointer to a struct")
-	}
-	val = val.Elem() // like &user => user
-
-	fields := make([]interface{}, val.NumField()) // like user => user.ID, user.FirstName, ...
-	for i := 0; i < val.NumField(); i++ {
-		fields[i] = val.Field(i).Addr().Interface()
-	}
-	return fields
-}
-
-// GetExecFields returns a slice of struct field values, excluding specified fields.
-// Example: GetExecFields(user, "ID", "CreatedAt") => []interface{}{user.FirstName, user.LastName, user.Nickname, user.Image}
-func GetExecFields(s interface{}, excludeFields ...string) []interface{} {
-	val := reflect.ValueOf(s) // like user => user.FirstName, user.LastName, ...
-	if val.Kind() == reflect.Ptr {
-		val = val.Elem()
-	}
-	if val.Kind() != reflect.Struct {
-		log.Fatal("Input must be a struct or pointer to a struct")
-	}
-
-	// Convert excluded fields to a map for fast lookup
-	excluded := make(map[string]bool)
-	for _, field := range excludeFields {
-		excluded[field] = true
-	}
-
-	var fields []interface{}
-	for i := 0; i < val.NumField(); i++ {
-		fieldName := val.Type().Field(i).Name
-		if !excluded[fieldName] {
-			fields = append(fields, val.Field(i).Interface())
-		}
-	}
-	return fields
-}
-
 func SetSessionCookie(w http.ResponseWriter, uuid string) {
 	http.SetCookie(w, &http.Cookie{
 		Name:     "session_token",
@@ -103,18 +57,6 @@ func DeleteSessionCookie(w http.ResponseWriter, uuid string) {
 		MaxAge: -1,
 	})
 }
-
-func Length(a, b int, e string) bool {
-	return len(e) < a || len(e) > b
-}
-
-func Placeholders(n int) string {
-	return strings.Repeat("?,", n)[:2*n-1]
-}
-
-// type ContextKey string
-
-// const UserIDKey ContextKey = "user"
 
 func GetUserFromContext(ctx context.Context) (user models.User, uuidCookie string, ok bool) {
 	user, ok = ctx.Value(UserIDKey).(models.User)
@@ -138,7 +80,7 @@ func StoreThePic(UploadDir string, file multipart.File, handler *multipart.FileH
 		return strings.HasSuffix(handler.Filename, ext)
 	})
 	if extIndex == -1 {
-		return "" , fmt.Errorf("err")
+		return "", fmt.Errorf("err")
 	}
 
 	filePath := filepath.Join(UploadDir, randomstr+extensions[extIndex])
@@ -153,7 +95,7 @@ func StoreThePic(UploadDir string, file multipart.File, handler *multipart.FileH
 		return "", errors.New("failed to save file")
 	}
 
-	return randomstr+extensions[extIndex], nil
+	return randomstr + extensions[extIndex], nil
 }
 
 func GenerateUuid() string {
