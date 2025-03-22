@@ -1,0 +1,36 @@
+1- admin panel
+-- add cars --
+Name
+one or multible pictures
+Description
+price
+avaibale
+arrivetime
+
+
+
+
+-- logs --
+- car -
+cla 220 -> tenin - tlat / larbe3- khemis / 
+time it whos been out
+
+filtering :
+brands ex: bmw mercides dodge
+Type: luxury, SUv , Sedan, supercar, van, economie, electric, busness, convertebel
+
+
+Main insperations:
+https://renty.ae/
+
+
+
+INSERT INTO opening_hours (day_of_week, open_time, close_time)
+VALUES 
+('Mon', '09:00', '20:30'),
+('Tue', '09:00', '20:30'),
+('Wed', '09:00', '20:30'),
+('Thu', '09:00', '20:30'),
+('Fri', '09:00', '20:30'),
+('Sat', '09:00', '20:30'),
+('Sun', NULL, NULL);  -- Closed on Sunday
