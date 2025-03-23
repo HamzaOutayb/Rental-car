@@ -16,11 +16,10 @@ const dbPath = "internal/repository/forum.db"
 
 func OpenDb() (*sql.DB, error) {
 	var err error
-	db, err := sql.Open("sqlite3", dbPath+"?_foreign_keys=1")
+	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
 		return db, err
 	}
-	db.SetMaxOpenConns(10)
 	return db, nil
 }
 

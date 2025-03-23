@@ -1,0 +1,7 @@
+-- +migrate Up
+CREATE TABLE
+    brands (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        brand TEXT NOT NULL,
+        count INTEGER NOT NULL DEFAULT 0,
+    );

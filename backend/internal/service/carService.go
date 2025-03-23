@@ -1,9 +1,5 @@
 package service
 
-import "html"
+import "social-network/internal/models"
 
-func (s *Service) Addcar(car *models.Car) error {
-	car = html.EscapeString(car.content)
-
-	err := s.Database.insertCar(car)
-}
+func (s *Service) Addcar(car *models.Car) {}
