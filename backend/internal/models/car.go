@@ -15,3 +15,15 @@ type Car struct {
     Main int `json:"main"`
     Main_type int `json:"main_type"`
 }
+
+type CarToInsert struct {
+    ID          int      `json:"id"`
+    Name        string   `json:"name"`
+    Description string   `json:"description"`
+    Price       float64  `json:"price"`
+    BrandID     int      `json:"brand_id"`
+    TypeID      int      `json:"type_id"`
+    ContactID   int      `json:"contact_id"`
+    LocalID     int      `json:"local_id"`
+    Conditions  []string `json:"conditions"`
+}
