@@ -1,0 +1,180 @@
+/* Modal Overlay */
+.modal-overlay {
+  position: absolute;
+    /* position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; */
+    /* width: 100%; */
+    /* height: 100%; */
+    /* background: rgba(245, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; */
+  }
+  
+  /* Modal Container */
+  .modal {
+    background: #D0DEE9;
+    padding: 20px;
+    padding-top: 40px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 1px  1px 5px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+  
+  /* Close Button */
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #555;
+    transition: color 0.3s ease;
+  }
+  
+  .close:hover {
+    color: red;
+  }
+  
+  /* Form Styling */
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Row Layout */
+  .formRow {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Inputs and Selects */
+  .input, .textarea, .select, .conditionInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: border 0.3s ease-in-out;
+  }
+  
+  .input:focus, .textarea:focus, .select:focus, .conditionInput:focus {
+    border-color: #007bff;
+  }
+  
+  /* .conditionInput{
+    width: 95%;
+  } */
+
+  .add {
+    position: absolute;
+    width: 20px;
+    right: -10px;
+    top: 9px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .conditionsCon {
+    background-color: #fff;
+    padding: 8px;
+  }
+
+  .condInputCont {
+    position: relative;
+    width: 95%;
+  }
+  /* Description Field */
+  .textarea {
+    width: 95%;
+    resize: none;
+    height: 80px;
+  }
+  
+  /* File Input */
+  .fileInput {
+    border: none;
+    background: #f5f5f5;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  /* Image Preview Section */
+  .imagePreviewContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .imageWrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  
+  .imagePreview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .primaryLabel {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: #007bff;
+    color: #fff;
+    font-size: 12px;
+    padding: 3px 5px;
+    border-radius: 3px;
+  }
+  
+  /* Remove Image Button */
+  .removeImageButton {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    border: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  
+  /* Submit & Close Buttons */
+  .button {
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .button:hover {
+    background: #0056b3;
+  }
+  
+  .closeButton {
+    background: #ddd;
+    color: #292929;
+  }
+  
+  .closeButton:hover {
+    background: #bbb;
+  }
+  

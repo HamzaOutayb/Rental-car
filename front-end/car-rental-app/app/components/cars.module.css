@@ -1,0 +1,53 @@
+.carsContainer {
+    display: inline-block;
+    width: calc(100vw - 250px);
+    height: 100vh;
+    margin-left: 250px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.addCarBtn {
+    position: absolute;
+    background-color: rgb(0, 102, 255);
+    width: fit-content;
+    padding: 8px;
+    border-radius: 5px;
+    color: #fff;
+    margin-left: auto;
+    margin: 10px;
+    right: 0;
+    cursor: pointer;
+}
+
+.label {
+    margin-left: 10px;
+}
+
+.select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 150px;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 15px;
+}
+
+.down {
+    position: relative;
+    left: -20px;
+    pointer-events: none;
+    /* z-index: ; */
+}
+
+.addModal {
+    position: absolute;
+    top: 10px;
+    right: 0;
+}

@@ -1,0 +1,46 @@
+.sideBar {
+    position: absolute;
+    width: 250px;
+    height: 100vh;
+    background-color: #fff;
+    font-family: sans-serif;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid #c1ccd1;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.sideBarItem {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    padding-left: 10px;
+    cursor: pointer;
+    transition: background ease .3s;
+}
+
+.icon {
+    font-size: 18px;
+    margin-right: 8px;
+}
+
+.tag {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.sideBarItem:hover {
+    background-color: #D0DEE9;
+}
+.selected {
+    background-color: #c7d1d8;
+}
