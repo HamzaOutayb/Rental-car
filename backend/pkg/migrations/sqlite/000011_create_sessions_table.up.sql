@@ -1,0 +1,3 @@
+CREATE TABLE sessions (
+    id INTEGER PRIMARY KEY NOT NULL 
+)

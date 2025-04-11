@@ -76,7 +76,7 @@ func (H *Handler) AddCar(w http.ResponseWriter, r *http.Request) {
 	for i, imgPath := range imagePaths {
 		isPrimary := 0
 		if i == 0 {
-			isPrimary = 1
+			isPrimary = 0
 		}
 		H.Service.AddCarImage(carID, imgPath, isPrimary)
 	}

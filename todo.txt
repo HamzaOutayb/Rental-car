@@ -34,3 +34,11 @@ VALUES
 ('Fri', '09:00', '20:30'),
 ('Sat', '09:00', '20:30'),
 ('Sun', NULL, NULL);  -- Closed on Sunday
+
+getcarbyid
+getcarsbytype--> ex: ?type=sedan&type=suv
+deletecarpost
+Updatecarpost
+likedcarposts
+likefunctuanality
+login/register funcunalty

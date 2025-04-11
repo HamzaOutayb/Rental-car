@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE local (
+CREATE TABLE shop_info (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     addr TEXT,
@@ -8,6 +8,6 @@ CREATE TABLE local (
     watssapp TEXT,
     email TEXT,
     phone-num TEXT,
-    time_id INTEGER,
-    FOREIGN KEY (time_id) REFERENCES opening_hours(id) ON DELETE CASCADE,
+    schedule_id INTEGER,
+    FOREIGN KEY (schedule_id) REFERENCES schedule(id) ON DELETE CASCADE,
 );
