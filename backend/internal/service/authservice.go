@@ -2,8 +2,7 @@ package service
 
 import (
 	"social-network/internal/models"
-
-	"github.com/gofrs/uuid"
+	utils "social-network/pkg"
 )
 
 func (S *Service) LoginUser(User *models.User) (string, error) {
@@ -15,13 +14,9 @@ func (S *Service) LoginUser(User *models.User) (string, error) {
 
 	User.ID = id
 	// generate new uuid
-	Uuid := GenerateUuid()
+	Uuid := utils.GenerateUuid()
 
 	// Update uuid
 	S.Database.AddUuid(Uuid, User.ID)
 	return Uuid, nil
-}
-
-func GenerateUuid() string {
-	return uuid.Must(uuid.NewV4()).String()
 }

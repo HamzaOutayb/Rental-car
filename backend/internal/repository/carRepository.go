@@ -42,10 +42,15 @@ func (data *Repository) GetConditions(carId int) ([]string, error) {
 	var conditionsText string
 	err := data.Db.QueryRow("SELECT conditions FROM cars WHERE id = ?", carId).Scan(&conditionsText)
 	if err != nil {
-		return []string{},err
+		return []string{}, err
 	}
 	var conditions []string
 	json.Unmarshal([]byte(conditionsText), &conditions)
 
 	return conditions, nil
+}
+
+func (data *Repository) AddCarImage(carId int, path string, isPrimary int) error {
+	
+	return nil
 }

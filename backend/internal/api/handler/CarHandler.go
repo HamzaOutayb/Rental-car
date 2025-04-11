@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-
+	utils "social-network/pkg"
 	"social-network/internal/models"
 )
 
@@ -27,9 +27,9 @@ func (H *Handler) AddCar(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		defer file.Close()
-
+		Uuid := utils.GenerateUuid()
 		// Save file to server storage
-		imagePath := fmt.Sprintf("uploads/%d_%d%s", carID, i, filepath.Ext(fileHeader.Filename))
+		imagePath := fmt.Sprintf("uploads/%d_%d%s", Uuid, i, filepath.Ext(fileHeader.Filename))
 		dst, err := os.Create(imagePath)
 		if err != nil {
 			http.Error(w, "Failed to save image", http.StatusInternalServerError)
@@ -66,7 +66,7 @@ func (H *Handler) AddCar(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Insert the car into the database
-	carID, err := H.Service.Addcar(&car,imagePaths)
+	carID, err := H.Service.Addcar(&car, imagePaths)
 	if err != nil {
 		http.Error(w, "Failed to add car", http.StatusInternalServerError)
 		return

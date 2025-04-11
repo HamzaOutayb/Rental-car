@@ -28,14 +28,10 @@ func (s *Service) Addcar(car *models.CarToInsert, imagePaths []string) (int, err
 		if i == 0 {
 			isPrimary = 1
 		}
-		err := s.data.AddCarImage(carID, imgPath, isPrimary); if err != nil {
-			
+		err := s.Database.AddCarImage(car.ID, imgPath, isPrimary); if err != nil {
+			return 0, fmt.Errorf("failed to add images: %w", err)
 		}
 	}
 
 	return car.ID, nil
-}
-func (s *Service) AddCarImage(carId int, path string, isPrimary int) error {
-	s.Database.InsertCarImage(carId)
-	return nil
 }
