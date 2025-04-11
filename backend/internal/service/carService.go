@@ -5,7 +5,7 @@ import (
 	"social-network/internal/models"
 )
 
-func (s *Service) Addcar(car *models.CarToInsert) (int, error) {
+func (s *Service) Addcar(car *models.CarToInsert, imagePaths []string) (int, error) {
 	// Insert into cars table
 	id, err := s.Database.Addcartodb(car)
 	if err != nil {
@@ -22,9 +22,20 @@ func (s *Service) Addcar(car *models.CarToInsert) (int, error) {
 		}
 	}
 
+	// Insert images into the database
+	for i, imgPath := range imagePaths {
+		isPrimary := 0
+		if i == 0 {
+			isPrimary = 1
+		}
+		err := s.data.AddCarImage(carID, imgPath, isPrimary); if err != nil {
+			
+		}
+	}
+
 	return car.ID, nil
 }
 func (s *Service) AddCarImage(carId int, path string, isPrimary int) error {
-	
+	s.Database.InsertCarImage(carId)
 	return nil
 }

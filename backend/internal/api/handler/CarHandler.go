@@ -16,37 +16,6 @@ import (
 func (H *Handler) AddCar(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(10 << 20) // 10MB max
 
-	// Extract car details from form data
-	name := r.FormValue("name")
-	description := r.FormValue("description")
-	price, _ := strconv.ParseFloat(r.FormValue("price"), 64)
-	brandID, _ := strconv.Atoi(r.FormValue("brand_id"))
-	typeID, _ := strconv.Atoi(r.FormValue("type_id"))
-	contactID, _ := strconv.Atoi(r.FormValue("contact_id"))
-	localID, _ := strconv.Atoi(r.FormValue("local_id"))
-
-	// Extract conditions (comma-separated values)
-	conditions := strings.Split(r.FormValue("conditions"), ",")
-
-	// Create a car object
-	car := models.CarToInsert{
-		Name:        name,
-		Description: description,
-		Price:       price,
-		BrandID:     brandID,
-		TypeID:      typeID,
-		ContactID:   contactID,
-		LocalID:     localID,
-		Conditions:  conditions,
-	}
-
-	// Insert the car into the database
-	carID, err := H.Service.Addcar(&car)
-	if err != nil {
-		http.Error(w, "Failed to add car", http.StatusInternalServerError)
-		return
-	}
-
 	// Handle image uploads
 	files := r.MultipartForm.File["images"]
 	var imagePaths []string
@@ -72,13 +41,35 @@ func (H *Handler) AddCar(w http.ResponseWriter, r *http.Request) {
 		imagePaths = append(imagePaths, imagePath)
 	}
 
-	// Insert images into the database
-	for i, imgPath := range imagePaths {
-		isPrimary := 0
-		if i == 0 {
-			isPrimary = 0
-		}
-		H.Service.AddCarImage(carID, imgPath, isPrimary)
+	// Extract car details from form data
+	name := r.FormValue("name")
+	description := r.FormValue("description")
+	price, _ := strconv.ParseFloat(r.FormValue("price"), 64)
+	brandID, _ := strconv.Atoi(r.FormValue("brand_id"))
+	typeID, _ := strconv.Atoi(r.FormValue("type_id"))
+	contactID, _ := strconv.Atoi(r.FormValue("contact_id"))
+	localID, _ := strconv.Atoi(r.FormValue("local_id"))
+
+	// Extract conditions (comma-separated values)
+	conditions := strings.Split(r.FormValue("conditions"), ",")
+
+	// Create a car object
+	car := models.CarToInsert{
+		Name:        name,
+		Description: description,
+		Price:       price,
+		BrandID:     brandID,
+		TypeID:      typeID,
+		ContactID:   contactID,
+		LocalID:     localID,
+		Conditions:  conditions,
+	}
+
+	// Insert the car into the database
+	carID, err := H.Service.Addcar(&car,imagePaths)
+	if err != nil {
+		http.Error(w, "Failed to add car", http.StatusInternalServerError)
+		return
 	}
 
 	// Success response
