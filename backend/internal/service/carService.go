@@ -1,22 +1,30 @@
 package service
 
-import "social-network/internal/models"
+import (
+	"fmt"
+	"social-network/internal/models"
+)
 
-func (s *Service) Addcar(car *models.CarToInsert) (int64, error){
-	//inset in cars tables
+func (s *Service) Addcar(car *models.CarToInsert) (int, error) {
+	// Insert into cars table
+	id, err := s.Database.Addcartodb(car)
+	if err != nil {
+		return 0, fmt.Errorf("failed to add car to database: %w", err)
+	}
 
-	// add conditions
-	AddConditions(0, car.Conditions)
-	return 0, nil
+	// Set the returned ID to the car object
+	car.ID = id
+
+	// Add conditions if they exist
+	if len(car.Conditions) > 0 {
+		if err := s.Database.AddConditions(car.ID, car.Conditions); err != nil {
+			return 0, fmt.Errorf("failed to add conditions: %w", err)
+		}
+	}
+
+	return car.ID, nil
 }
-
-
-func (s *Service) AddCarImage(carId int64, path string, isPrimary int) (error){
+func (s *Service) AddCarImage(carId int, path string, isPrimary int) error {
 	
 	return nil
-}
-
-func AddConditions(carId int64, consitions []string) (error){
-	
-	return  nil
 }
