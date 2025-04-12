@@ -1,16 +1,15 @@
 package handler
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
+	"social-network/internal/models"
+	utils "social-network/pkg"
 	"strconv"
 	"strings"
-	utils "social-network/pkg"
-	"social-network/internal/models"
 )
 
 func (H *Handler) AddCar(w http.ResponseWriter, r *http.Request) {
@@ -73,8 +72,7 @@ func (H *Handler) AddCar(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Success response
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(map[string]interface{}{
+	utils.WriteJson(w, http.StatusCreated, map[string]interface{}{
 		"message": "Car added successfully",
 		"car_id":  carID,
 	})

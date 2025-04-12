@@ -51,6 +51,9 @@ func (data *Repository) GetConditions(carId int) ([]string, error) {
 }
 
 func (data *Repository) AddCarImage(carId int, path string, isPrimary int) error {
-	
+	_, err := data.Db.Exec("INSERT INTO car_images (car_id, image_path, is_primary)", carId, path, isPrimary)
+	if err != nil {
+		return err
+	}
 	return nil
 }
