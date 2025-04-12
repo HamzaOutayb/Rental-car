@@ -3,6 +3,7 @@ package service
 import (
 	"fmt"
 	"social-network/internal/models"
+	"strconv"
 )
 
 func (s *Service) Addcar(car *models.CarToInsert, imagePaths []string) (int, error) {
@@ -28,10 +29,38 @@ func (s *Service) Addcar(car *models.CarToInsert, imagePaths []string) (int, err
 		if i == 0 {
 			isPrimary = 1
 		}
-		err := s.Database.AddCarImage(car.ID, imgPath, isPrimary); if err != nil {
+		err := s.Database.AddCarImage(car.ID, imgPath, isPrimary)
+		if err != nil {
 			return 0, fmt.Errorf("failed to add images: %w", err)
 		}
 	}
 
 	return car.ID, nil
+}
+
+func (s *Service) DeleteCar(carID string) error {
+	carId, err := strconv.Atoi(carID)
+	if err != nil {
+		return err
+	}
+
+	// delete car from car table
+	err = s.Database.DeleteCar(carId)
+	if err != nil {
+		return err
+	}
+
+	// delete images
+	err = s.Database.DeleteCarImages(carId)
+	if err != nil {
+		return err
+	}
+
+	// delete car conditions
+	err = s.Database.DeleteCarConditions(carId)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

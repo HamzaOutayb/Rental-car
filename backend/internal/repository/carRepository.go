@@ -57,3 +57,27 @@ func (data *Repository) AddCarImage(carId int, path string, isPrimary int) error
 	}
 	return nil
 }
+
+func (data *Repository) DeleteCar(carId int) error {
+	_, err := data.Db.Exec("DELETE", carId)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (data *Repository) DeleteCarImages(carId int) error {
+	_, err := data.Db.Exec("DELETE", carId)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (data *Repository) DeleteCarConditions(carId int) error {
+	_, err := data.Db.Exec("DELETE", carId)
+	if err != nil {
+		return err
+	}
+	return nil
+}

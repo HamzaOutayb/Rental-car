@@ -13,6 +13,11 @@ import (
 )
 
 func (H *Handler) AddCar(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		utils.WriteJson(w, http.StatusMethodNotAllowed, "method not allowed")
+		return
+	}
+
 	r.ParseMultipartForm(10 << 20) // 10MB max
 
 	// Handle image uploads
@@ -77,5 +82,29 @@ func (H *Handler) AddCar(w http.ResponseWriter, r *http.Request) {
 		"car_id":  carID,
 	})
 }
-func (H *Handler) EditCar(w http.ResponseWriter, r *http.Request)   {}
-func (H *Handler) DeleteCar(w http.ResponseWriter, r *http.Request) {}
+
+func (H *Handler) EditCar(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		utils.WriteJson(w, http.StatusMethodNotAllowed, "method not allowed")
+		return
+	}
+
+	// get the body of the edite
+	
+}
+
+func (H *Handler) DeleteCar(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		utils.WriteJson(w, http.StatusMethodNotAllowed, "method not allowed")
+		return
+	}
+
+	carId := r.FormValue("cardId")
+	err := H.Service.DeleteCar(carId)
+	if err != nil {
+		utils.WriteJson(w, http.StatusBadRequest, "err while deleting a car")
+		return
+	}
+
+	utils.WriteJson(w, http.StatusOK, "cra deleted successfuly")
+}
