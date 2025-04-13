@@ -66,7 +66,7 @@ func (s *Service) DeleteCar(carID string) error {
 	return nil
 }
 
-func (s *Service) EditCar(car *models.CarToEdite, imagepaths []string) (err error) {
+func (s *Service) EditCar(car *models.CarToEdite) (err error) {
 	carIDStr := car.ID
 	carID, err := strconv.Atoi(carIDStr)
 	if err != nil {
@@ -88,21 +88,30 @@ func (s *Service) EditCar(car *models.CarToEdite, imagepaths []string) (err erro
 	conditions := strings.Split(car.Conditions, ",")
 
 	// Optional: handle new images (replace or add)
-	if len(imagesToDelete) > 0 && imagesToDelete[0] != "" {
-		err := s.Database.DeleteCarImages(carID, imagesToDelete)
-		if err != nil {
-			return
-		}
-	}
-
-	// add new images
-	if len(imagepaths) > 0 && imagepaths[0] != "" {
-		for i, path := range imagepaths {
-			err := s.Database.AddCarImage(carID, path, i)
+	if len(car.ImagesToDelete) > 0 && car.ImagesToDelete[0] != "" {
+		for _, imagePath := range car.ImagesToDelete {
+			err = s.Database.DeleteCarImagesByPath(carID, imagePath)
 			if err != nil {
 				return
 			}
 		}
 	}
+
+	var isPrimary int
+
+	// add new images
+	if len(car.NewImagePaths) > 0 && car.NewImagePaths[0] != "" {
+		for i, path := range car.NewImagePaths {
+			isPrimary = 0 // default
+			if car.Primary == "true" && i == 0 {
+				isPrimary = 1 // mark the first one as primary
+			}
+			err = s.Database.AddCarImage(carID, path, isPrimary)
+			if err != nil {
+				return
+			}
+		}
+	}
+	
 	return nil
 }

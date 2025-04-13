@@ -30,11 +30,7 @@ func (data *Repository) Addcartodb(car *models.CarToInsert) (int, error) {
 
 func (data *Repository) AddConditions(carId int, conditions []string) error {
 	_, err := data.Db.Exec("INSERT INTO conditions (condition, car_id)", carId, conditions)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
 
 // I get car condition from db as a slice of byte/json then change it to a slice of string
@@ -52,32 +48,25 @@ func (data *Repository) GetConditions(carId int) ([]string, error) {
 
 func (data *Repository) AddCarImage(carId int, path string, isPrimary int) error {
 	_, err := data.Db.Exec("INSERT INTO car_images (car_id, image_path, is_primary)", carId, path, isPrimary)
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
 }
 
 func (data *Repository) DeleteCar(carId int) error {
-	_, err := data.Db.Exec("DELETE", carId)
-	if err != nil {
-		return err
-	}
-	return nil
+	_, err := data.Db.Exec("DELETE FROM cars WHERE id = ?", carId)
+	return err
 }
 
 func (data *Repository) DeleteCarImages(carId int) error {
-	_, err := data.Db.Exec("DELETE", carId)
-	if err != nil {
-		return err
-	}
-	return nil
+	_, err := data.Db.Exec("DELETE FROM car_images WHERE car_id = ?", carId)
+	return err
+}
+
+func (data *Repository) DeleteCarImagesByPath(carId int, image string) error {
+	_, err := data.Db.Exec("DELETE FROM car_images WHERE car_id = ? AND image_path = ?", carId, image)
+	return err
 }
 
 func (data *Repository) DeleteCarConditions(carId int) error {
-	_, err := data.Db.Exec("DELETE", carId)
-	if err != nil {
-		return err
-	}
-	return nil
+	_, err := data.Db.Exec("DELETE FROM car_conditions WHERE car_id = ?", carId)
+	return err
 }

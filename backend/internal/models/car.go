@@ -29,13 +29,16 @@ type CarToInsert struct {
 }
 
 type CarToEdite struct {
-	ID          string `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Price       string `json:"price"`
-	BrandID     string `json:"brand_id"`
-	TypeID      string `json:"type_id"`
-	ContactID   string `json:"contact_id"`
-	LocalID     string `json:"local_id"`
-	Conditions  string `json:"conditions"`
+	ID             string `json:"id"`
+	Name           string `json:"name"`
+	Description    string `json:"description"`
+	Price          string `json:"price"`
+	BrandID        string `json:"brand_id"`
+	TypeID         string `json:"type_id"`
+	ContactID      string `json:"contact_id"`
+	LocalID        string `json:"local_id"`
+	Conditions     string `json:"conditions"`
+	NewImagePaths  []string
+	ImagesToDelete []string
+	Primary        string
 }

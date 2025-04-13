@@ -48,14 +48,12 @@ func (H *Handler) AddCar(w http.ResponseWriter, r *http.Request) {
 	// Extract car details from form data
 	name := r.FormValue("name")
 	description := r.FormValue("description")
-	price,_ := strconv.ParseFloat(r.FormValue("price"), 64)
-	brandID,_ := strconv.Atoi(r.FormValue("brand_id"))
-	typeID,_ := strconv.Atoi(r.FormValue("type_id"))
-	contactID,_ := strconv.Atoi(r.FormValue("contact_id"))
-	localID,_ := strconv.Atoi(r.FormValue("local_id"))
-	conditions := strings.Split(r.FormValue("conditions"),",")
-
-
+	price, _ := strconv.ParseFloat(r.FormValue("price"), 64)
+	brandID, _ := strconv.Atoi(r.FormValue("brand_id"))
+	typeID, _ := strconv.Atoi(r.FormValue("type_id"))
+	contactID, _ := strconv.Atoi(r.FormValue("contact_id"))
+	localID, _ := strconv.Atoi(r.FormValue("local_id"))
+	conditions := strings.Split(r.FormValue("conditions"), ",")
 
 	// Create a car object
 	car := models.CarToInsert{
@@ -95,17 +93,18 @@ func (H *Handler) EditCar(w http.ResponseWriter, r *http.Request) {
 	carID := r.FormValue("car_id")
 	name := r.FormValue("name")
 	description := r.FormValue("description")
-	price :=  r.FormValue("price")
+	price := r.FormValue("price")
 	brandID := r.FormValue("brand_id")
 	typeID := r.FormValue("type_id")
 	contactID := r.FormValue("contact_id")
 	localID := r.FormValue("local_id")
 	conditions := r.FormValue("conditions")
 
-	// check if there is any images to delete 
-    imagesToDelete := strings.Split(r.FormValue("delete_images"), ",")
+	// check if there is any images to delete
+	imagesToDelete := strings.Split(r.FormValue("delete_images"), ",")
+	primary := r.FormValue("conditions") // primaryImage
 
-	// Optional: handle new images (replace or add)
+	// Optional: handle new images
 	files := r.MultipartForm.File["images"]
 	var newImagePaths []string
 
@@ -132,24 +131,26 @@ func (H *Handler) EditCar(w http.ResponseWriter, r *http.Request) {
 	}
 
 	updatedCar := models.CarToEdite{
-		ID:          carID,
-		Name:        name,
-		Description: description,
-		Price:       price,
-		BrandID:     brandID,
-		TypeID:      typeID,
-		ContactID:   contactID,
-		LocalID:     localID,
-		Conditions:  conditions,
-		
+		ID:             carID,
+		Name:           name,
+		Description:    description,
+		Price:          price,
+		BrandID:        brandID,
+		TypeID:         typeID,
+		ContactID:      contactID,
+		LocalID:        localID,
+		Conditions:     conditions,
+		NewImagePaths:  newImagePaths,
+		ImagesToDelete: imagesToDelete,
+		Primary:        primary,
 	}
 
-	err := H.Service.EditCar(&updatedCar, newImagePaths)
+	err := H.Service.EditCar(&updatedCar)
 	if err != nil {
 		utils.WriteJson(w, http.StatusBadRequest, "failed to update car")
 		return
 	}
-	
+
 	utils.WriteJson(w, http.StatusOK, map[string]interface{}{
 		"message": "Car updated successfully",
 		"car_id":  carID,
