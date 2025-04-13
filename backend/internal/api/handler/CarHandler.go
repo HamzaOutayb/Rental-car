@@ -48,14 +48,14 @@ func (H *Handler) AddCar(w http.ResponseWriter, r *http.Request) {
 	// Extract car details from form data
 	name := r.FormValue("name")
 	description := r.FormValue("description")
-	price, _ := strconv.ParseFloat(r.FormValue("price"), 64)
-	brandID, _ := strconv.Atoi(r.FormValue("brand_id"))
-	typeID, _ := strconv.Atoi(r.FormValue("type_id"))
-	contactID, _ := strconv.Atoi(r.FormValue("contact_id"))
-	localID, _ := strconv.Atoi(r.FormValue("local_id"))
+	price,_ := strconv.ParseFloat(r.FormValue("price"), 64)
+	brandID,_ := strconv.Atoi(r.FormValue("brand_id"))
+	typeID,_ := strconv.Atoi(r.FormValue("type_id"))
+	contactID,_ := strconv.Atoi(r.FormValue("contact_id"))
+	localID,_ := strconv.Atoi(r.FormValue("local_id"))
+	conditions := strings.Split(r.FormValue("conditions"),",")
 
-	// Extract conditions (comma-separated values)
-	conditions := strings.Split(r.FormValue("conditions"), ",")
+
 
 	// Create a car object
 	car := models.CarToInsert{
@@ -89,8 +89,71 @@ func (H *Handler) EditCar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// get the body of the edite
+	r.ParseMultipartForm(10 << 20)
+
+	// Handle updated fields
+	carID := r.FormValue("car_id")
+	name := r.FormValue("name")
+	description := r.FormValue("description")
+	price :=  r.FormValue("price")
+	brandID := r.FormValue("brand_id")
+	typeID := r.FormValue("type_id")
+	contactID := r.FormValue("contact_id")
+	localID := r.FormValue("local_id")
+	conditions := r.FormValue("conditions")
+
+	// check if there is any images to delete 
+    imagesToDelete := strings.Split(r.FormValue("delete_images"), ",")
+
+	// Optional: handle new images (replace or add)
+	files := r.MultipartForm.File["images"]
+	var newImagePaths []string
+
+	for i, fileHeader := range files {
+		file, err := fileHeader.Open()
+		if err != nil {
+			http.Error(w, "Failed to open image file", http.StatusBadRequest)
+			return
+		}
+		defer file.Close()
+
+		Uuid := utils.GenerateUuid()
+		imagePath := fmt.Sprintf("uploads/%s_%d%s", Uuid, i, filepath.Ext(fileHeader.Filename))
+
+		dst, err := os.Create(imagePath)
+		if err != nil {
+			http.Error(w, "Failed to save image", http.StatusInternalServerError)
+			return
+		}
+		defer dst.Close()
+		io.Copy(dst, file)
+
+		newImagePaths = append(newImagePaths, imagePath)
+	}
+
+	updatedCar := models.CarToEdite{
+		ID:          carID,
+		Name:        name,
+		Description: description,
+		Price:       price,
+		BrandID:     brandID,
+		TypeID:      typeID,
+		ContactID:   contactID,
+		LocalID:     localID,
+		Conditions:  conditions,
+		
+	}
+
+	err := H.Service.EditCar(&updatedCar, newImagePaths)
+	if err != nil {
+		utils.WriteJson(w, http.StatusBadRequest, "failed to update car")
+		return
+	}
 	
+	utils.WriteJson(w, http.StatusOK, map[string]interface{}{
+		"message": "Car updated successfully",
+		"car_id":  carID,
+	})
 }
 
 func (H *Handler) DeleteCar(w http.ResponseWriter, r *http.Request) {

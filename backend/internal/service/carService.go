@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"social-network/internal/models"
 	"strconv"
+	"strings"
 )
 
 func (s *Service) Addcar(car *models.CarToInsert, imagePaths []string) (int, error) {
@@ -62,5 +63,46 @@ func (s *Service) DeleteCar(carID string) error {
 		return err
 	}
 
+	return nil
+}
+
+func (s *Service) EditCar(car *models.CarToEdite, imagepaths []string) (err error) {
+	carIDStr := car.ID
+	carID, err := strconv.Atoi(carIDStr)
+	if err != nil {
+		return
+	}
+
+	// insert
+	name := car.Name
+	description := car.description
+
+	// Handle updated fields
+	price, _ := strconv.ParseFloat(car.Price, 64)
+	brandID, _ := strconv.Atoi(car.BrandID)
+	typeID, _ := strconv.Atoi(car.TypeID)
+	contactID, _ := strconv.Atoi(car.ContactID)
+	localID, _ := strconv.Atoi(car.LocalID)
+
+	// Extract conditions (comma-separated values)
+	conditions := strings.Split(car.Conditions, ",")
+
+	// Optional: handle new images (replace or add)
+	if len(imagesToDelete) > 0 && imagesToDelete[0] != "" {
+		err := s.Database.DeleteCarImages(carID, imagesToDelete)
+		if err != nil {
+			return
+		}
+	}
+
+	// add new images
+	if len(imagepaths) > 0 && imagepaths[0] != "" {
+		for i, path := range imagepaths {
+			err := s.Database.AddCarImage(carID, path, i)
+			if err != nil {
+				return
+			}
+		}
+	}
 	return nil
 }
