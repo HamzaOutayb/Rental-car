@@ -70,3 +70,7 @@ func (data *Repository) DeleteCarConditions(carId int) error {
 	_, err := data.Db.Exec("DELETE FROM car_conditions WHERE car_id = ?", carId)
 	return err
 }
+
+func (data *Repository) CarToEdite(car *models.CarToInsert) error {
+	err := data.Db.Exec("UPDATE")
+}

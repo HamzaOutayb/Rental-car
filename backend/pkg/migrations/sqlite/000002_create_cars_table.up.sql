@@ -8,6 +8,7 @@ CREATE TABLE cars (
     brand_id INTEGER,
     type_id INTEGER,
     contact_id INTEGER,
+    local_id INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (brand_id) REFERENCES brands(id) ON DELETE CASCADE,

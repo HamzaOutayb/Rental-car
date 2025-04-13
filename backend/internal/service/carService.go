@@ -68,8 +68,9 @@ func (s *Service) DeleteCar(carID string) error {
 
 func (s *Service) EditCar(car *models.CarToEdite) (err error) {
 	var carInsert models.CarToInsert
-
-	if carID, err := strconv.Atoi(car.ID); err == nil {
+	var arr []string
+	carID, err := strconv.Atoi(car.ID)
+	if err == nil {
 		carInsert.ID = carID
 	}
 
@@ -103,6 +104,15 @@ func (s *Service) EditCar(car *models.CarToEdite) (err error) {
 
 	if car.Conditions != "" {
 		carInsert.Conditions = strings.Split(car.Conditions, ",")
+		err = s.Database.AddConditions(carID, carInsert.Conditions)
+		if err != nil {
+			return err
+		}
+	}
+
+	err = s.Database.CarToEdite(&car)
+	if err != nil {
+		return err
 	}
 
 	// Optional: handle new images (replace or add)
@@ -130,6 +140,18 @@ func (s *Service) EditCar(car *models.CarToEdite) (err error) {
 			}
 		}
 	}
-	
+
 	return nil
 }
+
+func createQuery(arr []string, carID int) string {}
+
+
+/*
+name : mohamed
+
+description: imad
+
+date-updated: 2026
+
+*/
