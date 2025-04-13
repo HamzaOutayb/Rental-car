@@ -67,25 +67,43 @@ func (s *Service) DeleteCar(carID string) error {
 }
 
 func (s *Service) EditCar(car *models.CarToEdite) (err error) {
-	carIDStr := car.ID
-	carID, err := strconv.Atoi(carIDStr)
-	if err != nil {
-		return
+	var carInsert models.CarToInsert
+
+	if carID, err := strconv.Atoi(car.ID); err == nil {
+		carInsert.ID = carID
 	}
 
-	// insert
-	name := car.Name
-	description := car.description
+	if car.Name != "" {
+		carInsert.Name = car.Name
+	}
 
-	// Handle updated fields
-	price, _ := strconv.ParseFloat(car.Price, 64)
-	brandID, _ := strconv.Atoi(car.BrandID)
-	typeID, _ := strconv.Atoi(car.TypeID)
-	contactID, _ := strconv.Atoi(car.ContactID)
-	localID, _ := strconv.Atoi(car.LocalID)
+	if car.Description != "" {
+		carInsert.Description = car.Description
+	}
 
-	// Extract conditions (comma-separated values)
-	conditions := strings.Split(car.Conditions, ",")
+	if price, err := strconv.ParseFloat(car.Price, 64); err == nil {
+		carInsert.Price = price
+	}
+
+	if brandID, err := strconv.Atoi(car.BrandID); err == nil {
+		carInsert.BrandID = brandID
+	}
+
+	if typeID, err := strconv.Atoi(car.TypeID); err == nil {
+		carInsert.TypeID = typeID
+	}
+
+	if contactID, err := strconv.Atoi(car.ContactID); err == nil {
+		carInsert.ContactID = contactID
+	}
+
+	if localID, err := strconv.Atoi(car.LocalID); err == nil {
+		carInsert.LocalID = localID
+	}
+
+	if car.Conditions != "" {
+		carInsert.Conditions = strings.Split(car.Conditions, ",")
+	}
 
 	// Optional: handle new images (replace or add)
 	if len(car.ImagesToDelete) > 0 && car.ImagesToDelete[0] != "" {
