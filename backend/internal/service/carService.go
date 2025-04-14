@@ -68,7 +68,6 @@ func (s *Service) DeleteCar(carID string) error {
 
 func (s *Service) EditCar(car *models.CarToEdite) (err error) {
 	var carInsert models.CarToInsert
-	var arr []string
 	carID, err := strconv.Atoi(car.ID)
 	if err == nil {
 		carInsert.ID = carID
@@ -110,7 +109,7 @@ func (s *Service) EditCar(car *models.CarToEdite) (err error) {
 		}
 	}
 
-	err = s.Database.CarToEdite(&car)
+	err = s.Database.CarToEdite(car)
 	if err != nil {
 		return err
 	}
@@ -143,15 +142,3 @@ func (s *Service) EditCar(car *models.CarToEdite) (err error) {
 
 	return nil
 }
-
-func createQuery(arr []string, carID int) string {}
-
-
-/*
-name : mohamed
-
-description: imad
-
-date-updated: 2026
-
-*/

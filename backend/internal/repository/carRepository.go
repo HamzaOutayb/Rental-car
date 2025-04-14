@@ -71,6 +71,27 @@ func (data *Repository) DeleteCarConditions(carId int) error {
 	return err
 }
 
-func (data *Repository) CarToEdite(car *models.CarToInsert) error {
-	err := data.Db.Exec("UPDATE")
+func (data *Repository) CarToEdite(car *models.CarToEdite) error {
+	_,err := data.Db.Exec(`
+	UPDATE cars
+	SET
+		name = CASE WHEN ? != '' THEN ? ELSE name END,
+		description = CASE WHEN ? != '' THEN ? ELSE description END,
+		price = CASE WHEN ? != '' THEN ? ELSE price END,
+		brand_id = CASE WHEN ? != '0' THEN ? ELSE brand_id END,
+		type_id = CASE WHEN ? != '0' THEN ? ELSE type_id END,
+		contact_id = CASE WHEN ? != '0' THEN ? ELSE contact_id END,
+		local_id = CASE WHEN ? != '0' THEN ? ELSE local_id END
+	WHERE id = ?
+	`,
+		&car.Name,
+		&car.Description,
+		&car.Price,
+		&car.BrandID,
+		&car.TypeID,
+		&car.ContactID,
+		&car.LocalID,
+		&car.ID,
+)
+return err
 }
