@@ -102,7 +102,7 @@ func (H *Handler) EditCar(w http.ResponseWriter, r *http.Request) {
 
 	// check if there is any images to delete
 	imagesToDelete := strings.Split(r.FormValue("delete_images"), ",")
-	primary := r.FormValue("conditions") // primaryImage
+	primary := r.FormValue("primary") // primaryImage
 
 	// Optional: handle new images
 	files := r.MultipartForm.File["images"]
@@ -172,3 +172,10 @@ func (H *Handler) DeleteCar(w http.ResponseWriter, r *http.Request) {
 
 	utils.WriteJson(w, http.StatusOK, "cra deleted successfuly")
 }
+
+
+func (H *Handler) GetCarsbyBrand(w http.ResponseWriter, r *http.Request) {}
+func (H *Handler) GetTrending(w http.ResponseWriter, r *http.Request) {}
+func (H *Handler) GetTopRentals(w http.ResponseWriter, r *http.Request) {}
+func (H *Handler) Getcarbyid(w http.ResponseWriter, r *http.Request) {}
+

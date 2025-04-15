@@ -23,10 +23,14 @@ func Routes(db *sql.DB) *http.ServeMux {
 /*	mux.HandleFunc("/api/createlocal", handler.Createlocal)
 	mux.HandleFunc("/api/updatelocal", handler.Updatelocal)
 	mux.HandleFunc("/api/deletelocal", handler.Deletelocal)
-
+*/
 	// Home page //
-	mux.HandleFunc("/api/getcars/", handler.Gethomecars)
-	mux.HandleFunc("/api/getcar/{id}", handler.Getcarbyid)*/
+	mux.HandleFunc("/api/getHome/", handler.GetHomeinformations) // brands
+	// Getting cars //
+	mux.HandleFunc("/api/getcars/brand/", handler.GetCarsbyBrand)// /api/getcars/barnd/BMW
+	mux.HandleFunc("/api/trending/", handler.GetTrending)
+	mux.HandleFunc("/api/top-rentals/", handler.GetTopRentals)	
+	mux.HandleFunc("/api/getcar/{id}", handler.Getcarbyid)
 
 	return mux
 }

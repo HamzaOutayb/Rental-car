@@ -42,3 +42,11 @@ Updatecarpost
 likedcarposts
 likefunctuanality
 login/register funcunalty
+
+
+/*
+		create a view that has
+		brand avaible / brands where count != 0
+		get all shop info by id
+		and last and not least schedule by shop id
+	*/
