@@ -25,7 +25,8 @@ func Routes(db *sql.DB) *http.ServeMux {
 	mux.HandleFunc("/api/deletelocal", handler.Deletelocal)
 */
 	// Home page //
-	mux.HandleFunc("/api/getHome/", handler.GetHomeinformations) // brands
+	mux.HandleFunc("/api/getHome/", handler.GetHomeinformations) // home footerinfo name schedule ext...
+	mux.HandleFunc("/api/getHome/", handler.AddHomeinformations) // home footerinfo name schedule ext...
 	// Getting cars //
 	mux.HandleFunc("/api/getcars/brand/", handler.GetCarsbyBrand)// /api/getcars/barnd/BMW
 	mux.HandleFunc("/api/trending/", handler.GetTrending)

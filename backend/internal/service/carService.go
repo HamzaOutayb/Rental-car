@@ -142,3 +142,18 @@ func (s *Service) EditCar(car *models.CarToEdite) (err error) {
 
 	return nil
 }
+
+var CarPerPage = 15
+
+func (s *Service) GetCarbyBrandName(Brandnm, page string) ([]models.Car, error) {
+	Page, err := strconv.Atoi(page)
+	if err != nil {
+		return []models.Car{}, err
+	}
+	start := (Page*15)
+	car, err := s.Database.GetCarbyBrandName(Brandnm, Start)
+	if err != nil {
+		return []models.Car{}, err
+	}
+	return nil
+}

@@ -4,6 +4,10 @@ import (
 	"net/http"
 	utils "social-network/pkg"
 )
+/*
+multiple forms a footer one a name one aschedule one ext...
+*/
+func (H *Handler) AddHomeinformations(w http.ResponseWriter, r *http.Request) {}
 
 func (H *Handler) GetHomeinformations(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {

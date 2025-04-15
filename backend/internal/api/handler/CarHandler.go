@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"social-network/internal/models"
+	"social-network/internal/service"
 	utils "social-network/pkg"
 	"strconv"
 	"strings"
@@ -174,8 +175,17 @@ func (H *Handler) DeleteCar(w http.ResponseWriter, r *http.Request) {
 }
 
 
-func (H *Handler) GetCarsbyBrand(w http.ResponseWriter, r *http.Request) {}
+func (H *Handler) GetCarsbyBrand(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		utils.WriteJson(w, http.StatusMethodNotAllowed, "method not allowed")
+		return
+	}
+
+	brandName, page := r.URL.Query().Get("brand"), r.URL.Query().Get("page")
+	Cars, err := service.GetCarbyBrandName(brandName, page); if err != nil {
+		
+	}
+}
 func (H *Handler) GetTrending(w http.ResponseWriter, r *http.Request) {}
 func (H *Handler) GetTopRentals(w http.ResponseWriter, r *http.Request) {}
 func (H *Handler) Getcarbyid(w http.ResponseWriter, r *http.Request) {}
-
