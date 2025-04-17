@@ -1,15 +1,3 @@
-1- admin panel
--- add cars --
-Name
-one or multible pictures
-Description
-price
-avaibale
-arrivetime
-
-
-
-
 -- logs --
 - car -
 cla 220 -> tenin - tlat / larbe3- khemis / 
@@ -17,12 +5,31 @@ time it whos been out
 
 filtering :
 brands ex: bmw mercides dodge
-Type: luxury, SUv , Sedan, supercar, van, economie, electric, busness, convertebel
+
 
 
 Main insperations:
 https://renty.ae/
 
+
+likedcarposts
+likefunctuanality
+login/register funcunalty
+
+
+/*
+		create a view that has
+		brand avaible / brands where count != 0
+		get all shop info by id
+		and last and not least schedule by shop id
+*/
+
+/*
+add this features to cars
+Type: luxury, SUv , Sedan, supercar, van, economie, electric, busness, convertebel
+avaibale
+arrivetime
+*/
 
 
 INSERT INTO opening_hours (day_of_week, open_time, close_time)
@@ -34,19 +41,3 @@ VALUES
 ('Fri', '09:00', '20:30'),
 ('Sat', '09:00', '20:30'),
 ('Sun', NULL, NULL);  -- Closed on Sunday
-
-getcarbyid
-getcarsbytype--> ex: ?type=sedan&type=suv
-deletecarpost
-Updatecarpost
-likedcarposts
-likefunctuanality
-login/register funcunalty
-
-
-/*
-		create a view that has
-		brand avaible / brands where count != 0
-		get all shop info by id
-		and last and not least schedule by shop id
-	*/

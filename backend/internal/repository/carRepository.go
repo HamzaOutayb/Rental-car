@@ -72,7 +72,7 @@ func (data *Repository) DeleteCarConditions(carId int) error {
 }
 
 func (data *Repository) CarToEdite(car *models.CarToEdite) error {
-	_,err := data.Db.Exec(`
+	_, err := data.Db.Exec(`
 	UPDATE cars
 	SET
 		name = CASE WHEN ? != '' THEN ? ELSE name END,
@@ -84,14 +84,77 @@ func (data *Repository) CarToEdite(car *models.CarToEdite) error {
 		local_id = CASE WHEN ? != '0' THEN ? ELSE local_id END
 	WHERE id = ?
 	`,
-		&car.Name,
-		&car.Description,
-		&car.Price,
-		&car.BrandID,
-		&car.TypeID,
-		&car.ContactID,
-		&car.LocalID,
-		&car.ID,
-)
-return err
+		&car.Name, &car.Name,
+		&car.Description, &car.Description,
+		&car.Price, &car.Price,
+		&car.BrandID, &car.BrandID,
+		&car.TypeID, &car.TypeID,
+		&car.ContactID, &car.ContactID,
+		&car.LocalID, &car.LocalID,
+		&car.ID, &car.ID,
+	)
+	return err
+}
+
+func (data *Repository) GetCarsCount(kind, Id string) (int, error) {
+	var count int
+	switch kind {
+	case "type":
+		err := data.Db.QueryRow("SELECT FROM type WHERE id = ?", Id).Scan(&count)
+		return count, err
+	case "brand":
+		err := data.Db.QueryRow("DELETE FROM brands WHERE id = ?", Id).Scan(&count)
+		return count, err
+	}
+	return 0, errors.New("GetCarsCount")
+}
+
+const LIMIT = 15
+
+func (data *Repository) GetCarbyBrandID(BrandID string, start int) ([]models.Car, error) {
+	rows, err := data.Db.Query("SELECT id, name, price, availability_status FROM cars WHERE Brand_id = ? OFFSET ? LIMIT ?", BrandID, start, LIMIT)
+	if err != nil {
+		return []models.Car{}, err
+	}
+
+	var Cars []models.Car
+	for rows.Next() {
+		var Car models.Car
+		err := rows.Scan(
+			&Car.ID,
+			&Car.Name,
+			&Car.Price,
+			&Car.Avaibility,
+		)
+		if err != nil {
+			return []models.Car{}, err
+		}
+		Cars = append(Cars, Car)
+	}
+
+	return Cars, nil
+}
+
+func (data *Repository) GetCarByTypeID(TypeID string, start int) ([]models.Car, error) {
+	rows, err := data.Db.Query("SELECT id, name, price, availability_status FROM cars WHERE type_id = ? OFFSET ? LIMIT ?", TypeID, start, LIMIT)
+	if err != nil {
+		return []models.Car{}, err
+	}
+
+	var Cars []models.Car
+	for rows.Next() {
+		var Car models.Car
+		err := rows.Scan(
+			&Car.ID,
+			&Car.Name,
+			&Car.Price,
+			&Car.Avaibility,
+		)
+		if err != nil {
+			return []models.Car{}, err
+		}
+		Cars = append(Cars, Car)
+	}
+
+	return Cars, nil
 }

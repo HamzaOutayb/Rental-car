@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"fmt"
 	"social-network/internal/models"
 	"strconv"
@@ -143,17 +144,52 @@ func (s *Service) EditCar(car *models.CarToEdite) (err error) {
 	return nil
 }
 
-var CarPerPage = 15
+func (s *Service) GetCarByBrandID(brandID, page string) ([]models.Car, error) {
+	pageNum, err := strconv.Atoi(page)
+	if err != nil || pageNum < 1 {
+		return nil, errors.New("invalid page number")
+	}
 
-func (s *Service) GetCarbyBrandName(Brandnm, page string) ([]models.Car, error) {
-	Page, err := strconv.Atoi(page)
+	start := (pageNum - 1) * 15
+
+	count, err := s.Database.GetCarsCount("brand", brandID)
 	if err != nil {
-		return []models.Car{}, err
+		return nil, errors.New("error while counting cars by brand")
 	}
-	start := (Page*15)
-	car, err := s.Database.GetCarbyBrandName(Brandnm, Start)
+
+	if start >= count {
+		return nil, errors.New("page out of range")
+	}
+
+	cars, err := s.Database.GetCarbyBrandID(brandID, start)
 	if err != nil {
-		return []models.Car{}, err
+		return nil, errors.New("failed to fetch cars by brand")
 	}
-	return nil
+
+	return cars, nil
+}
+
+func (s *Service) GetCarByTypeID(typeID, page string) ([]models.Car, error) {
+	pageNum, err := strconv.Atoi(page)
+	if err != nil || pageNum < 1 {
+		return nil, errors.New("invalid page number")
+	}
+
+	start := (pageNum - 1) * 15
+
+	count, err := s.Database.GetCarsCount("type", typeID)
+	if err != nil {
+		return nil, errors.New("error while counting cars by type")
+	}
+
+	if start >= count {
+		return nil, errors.New("page out of range")
+	}
+
+	cars, err := s.Database.GetCarByTypeID(typeID, start)
+	if err != nil {
+		return nil, errors.New("failed to fetch cars by type")
+	}
+
+	return cars, nil
 }
