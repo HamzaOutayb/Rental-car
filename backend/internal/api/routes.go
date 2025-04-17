@@ -27,14 +27,14 @@ func Routes(db *sql.DB) *http.ServeMux {
 
 	// Home page //
 	mux.HandleFunc("/api/getHome/", handler.GetHomeinformations) // home footerinfo name schedule ext...
-	mux.HandleFunc("/api/getHome/", handler.AddHomeinformations) // home footerinfo name schedule ext...
+	mux.HandleFunc("/api/addHome/", handler.AddHomeinformations) // home footerinfo name schedule ext...
 	// Getting cars //
 	mux.HandleFunc("/api/getcars/brand/", handler.GetCarsbyBrand)// /api/getcars/barnd/BMW
 				/*Getting cars by type ID*/
 	//Type: luxury, SUv , Sedan, supercar, van, economie, electric, busness, convertebel //
 	mux.HandleFunc("/api/getcars/type/", handler.GetCarsbyType)
-	mux.HandleFunc("/api/trending/", handler.GetTrending)
-	mux.HandleFunc("/api/top-rentals/", handler.GetTopRentals)	
+/*	mux.HandleFunc("/api/trending/", handler.GetTrending)
+	mux.HandleFunc("/api/top-rentals/", handler.GetTopRentals)*/	
 	mux.HandleFunc("/api/getcar/{id}", handler.Getcarbyid)
 
 

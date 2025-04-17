@@ -12,6 +12,8 @@ import (
 	"strings"
 )
 
+const uploadDir = "repository/uploads"
+
 func (H *Handler) AddCar(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		utils.WriteJson(w, http.StatusMethodNotAllowed, "method not allowed")
@@ -27,16 +29,17 @@ func (H *Handler) AddCar(w http.ResponseWriter, r *http.Request) {
 	for i, fileHeader := range files {
 		file, err := fileHeader.Open()
 		if err != nil {
-			http.Error(w, "Failed to open image file", http.StatusBadRequest)
+			utils.WriteJson(w, http.StatusBadRequest, "Failed to open image file")
 			return
 		}
 		defer file.Close()
 		Uuid := utils.GenerateUuid()
 		// Save file to server storage
-		imagePath := fmt.Sprintf("uploads/%d_%d%s", Uuid, i, filepath.Ext(fileHeader.Filename))
+		imagePath := fmt.Sprintf("uploads/%s%s_%d%s",uploadDir, Uuid, i, filepath.Ext(fileHeader.Filename))
+
 		dst, err := os.Create(imagePath)
 		if err != nil {
-			http.Error(w, "Failed to save image", http.StatusInternalServerError)
+			utils.WriteJson(w, http.StatusInternalServerError, "Failed to save image")
 			return
 		}
 		defer dst.Close()
@@ -111,17 +114,17 @@ func (H *Handler) EditCar(w http.ResponseWriter, r *http.Request) {
 	for i, fileHeader := range files {
 		file, err := fileHeader.Open()
 		if err != nil {
-			http.Error(w, "Failed to open image file", http.StatusBadRequest)
+			utils.WriteJson(w, http.StatusBadRequest, "Failed to open image file")
 			return
 		}
 		defer file.Close()
 
 		Uuid := utils.GenerateUuid()
-		imagePath := fmt.Sprintf("uploads/%s_%d%s", Uuid, i, filepath.Ext(fileHeader.Filename))
+		imagePath := fmt.Sprintf("uploads/%s%s_%d%s", uploadDir, Uuid, i, filepath.Ext(fileHeader.Filename))
 
 		dst, err := os.Create(imagePath)
 		if err != nil {
-			http.Error(w, "Failed to save image", http.StatusInternalServerError)
+			utils.WriteJson(w, http.StatusInternalServerError, "Failed to save image")
 			return
 		}
 		defer dst.Close()
@@ -209,4 +212,20 @@ func (H *Handler) GetCarsbyType(w http.ResponseWriter, r *http.Request) {
 
 func (H *Handler) GetTrending(w http.ResponseWriter, r *http.Request)   {}
 func (H *Handler) GetTopRentals(w http.ResponseWriter, r *http.Request) {}
-func (H *Handler) Getcarbyid(w http.ResponseWriter, r *http.Request)    {}
+
+func (H *Handler) Getcarbyid(w http.ResponseWriter, r *http.Request) {
+
+	id := r.URL.Query().Get("id")
+	if id == "" {
+		utils.WriteJson(w, http.StatusBadRequest, "Missing car ID")
+		return
+	}
+
+	Car, err := H.Service.Database.GetCarByID(id)
+	if err != nil {
+		utils.WriteJson(w, http.StatusBadRequest, err)
+		return
+	}
+
+	utils.WriteJson(w, http.StatusOK, Car)
+}

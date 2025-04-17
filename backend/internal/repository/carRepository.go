@@ -158,3 +158,29 @@ func (data *Repository) GetCarByTypeID(TypeID string, start int) ([]models.Car, 
 
 	return Cars, nil
 }
+
+func (data *Repository) GetCarByID(id string) (models.Car, error) {
+	var car models.Car
+	query := `SELECT id,
+	car_id,
+	car_name,
+	car_description,
+	car_price,
+	availability_status,
+	brand_name,
+	type_name,
+	contact_name,
+	contact_Telegram,
+	contact_watssapp,
+	FROM cars_detailed_view WHERE id = ?`
+
+	err := data.Db.QueryRow(query, id).Scan(
+		&car.ID, &car.Name, &car.Description, &car.Price, &car.Avaibility,
+		&car.Brand, &car.Type, &car.Contact_name, &car.Telegram, &car.Watssapp,
+	)
+	if err != nil {
+		return models.Car{}, err
+	}
+
+	return car, nil
+}

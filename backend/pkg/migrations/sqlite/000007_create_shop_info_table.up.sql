@@ -7,7 +7,7 @@ CREATE TABLE shop_info (
     facebook TEXT,
     watssapp TEXT,
     email TEXT,
-    phone-num TEXT,
+    phone_num TEXT,
     schedule_id INTEGER,
-    FOREIGN KEY (schedule_id) REFERENCES schedule(id) ON DELETE CASCADE,
+    FOREIGN KEY (schedule_id) REFERENCES schedule(id) ON DELETE CASCADE
 );

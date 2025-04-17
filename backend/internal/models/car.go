@@ -14,6 +14,7 @@ type Car struct {
 	Watssapp    string   `json:"watssapp"`
 	Main        int      `json:"main"`
 	Main_type   int      `json:"main_type"`
+	Contact_name string `json:"contact_name"`
 }
 
 type CarToInsert struct {
